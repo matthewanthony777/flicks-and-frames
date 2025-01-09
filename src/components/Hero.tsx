@@ -5,11 +5,19 @@ const Hero = () => {
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cinema-black">
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-t from-cinema-black via-cinema-black/90 to-transparent" />
-        <img
-          src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"
-          alt="Cinema"
-          className="w-full h-full object-cover opacity-50"
-        />
+        <div className="w-full h-full">
+          <iframe 
+            width="100%" 
+            height="100%" 
+            src="https://www.youtube.com/embed/6hNlpOSDr1w?si=QcBsfx8aNi8IrjT7&start=5&autoplay=1&mute=1&controls=0&loop=1&playlist=6hNlpOSDr1w" 
+            title="YouTube video player" 
+            frameBorder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+            className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
+          />
+        </div>
       </div>
       
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto animate-fadeIn">
