@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Moon, Sun, Users } from "lucide-react";
+import { Menu, X, Moon, Sun, Users, Home, Film, NewspaperIcon, Briefcase, Info } from "lucide-react";
 import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
 import SocialLinks from "./SocialLinks";
@@ -14,15 +14,35 @@ const Navigation = () => {
   }, []);
 
   const menuItems = [
-    { name: "Home", href: "/" },
-    { name: "Reviews", href: "/reviews" },
-    { name: "Articles", href: "/articles" },
-    { name: "Careers", href: "/careers" },
-    { name: "About", href: "/about" },
+    { 
+      name: "Home", 
+      href: "/", 
+      icon: <Home className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:scale-110" /> 
+    },
+    { 
+      name: "Reviews", 
+      href: "/reviews", 
+      icon: <Film className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:scale-110" /> 
+    },
+    { 
+      name: "Articles", 
+      href: "/articles", 
+      icon: <NewspaperIcon className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:scale-110" /> 
+    },
+    { 
+      name: "Careers", 
+      href: "/careers", 
+      icon: <Briefcase className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:scale-110" /> 
+    },
+    { 
+      name: "About", 
+      href: "/about", 
+      icon: <Info className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:scale-110" /> 
+    },
     { 
       name: "Collaborate", 
       href: "/collaborate", 
-      icon: <Users className="h-4 w-4 mr-2" /> 
+      icon: <Users className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:scale-110" /> 
     },
   ];
 
@@ -43,7 +63,7 @@ const Navigation = () => {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="text-gray-300 hover:text-cinema-gold px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center"
+                    className="text-gray-300 hover:text-cinema-gold px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 flex items-center group"
                   >
                     {item.icon}
                     {item.name}
@@ -60,9 +80,9 @@ const Navigation = () => {
                   aria-label="Toggle theme"
                 >
                   {theme === "dark" ? (
-                    <Sun className="h-5 w-5" />
+                    <Sun className="h-5 w-5 transition-transform duration-200 hover:scale-110" />
                   ) : (
-                    <Moon className="h-5 w-5" />
+                    <Moon className="h-5 w-5 transition-transform duration-200 hover:scale-110" />
                   )}
                 </Button>
               )}
@@ -78,9 +98,9 @@ const Navigation = () => {
                   aria-label="Toggle theme"
                 >
                   {theme === "dark" ? (
-                    <Sun className="h-5 w-5" />
+                    <Sun className="h-5 w-5 transition-transform duration-200 hover:scale-110" />
                   ) : (
-                    <Moon className="h-5 w-5" />
+                    <Moon className="h-5 w-5 transition-transform duration-200 hover:scale-110" />
                   )}
                 </Button>
               )}
@@ -103,7 +123,7 @@ const Navigation = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-300 hover:text-cinema-gold block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 flex items-center"
+                  className="text-gray-300 hover:text-cinema-gold block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 flex items-center group"
                   onClick={() => setIsOpen(false)}
                 >
                   {item.icon}
