@@ -52,10 +52,23 @@ export default {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        cinema: {
-          black: "#0A0A0A",
-          gray: "#262626",
-          gold: "#D4AF37",
+        theme: {
+          dark: "#1A1F2C",
+          neutral: "#8E9196",
+          primary: "#9b87f5",
+          secondary: "#7E69AB",
+          tertiary: "#6E59A5",
+          light: "#D6BCFA",
+          soft: {
+            green: "#F2FCE2",
+            yellow: "#FEF7CD",
+            orange: "#FEC6A1",
+            purple: "#E5DEFF",
+            pink: "#FFDEE2",
+            peach: "#FDE1D3",
+            blue: "#D3E4FD",
+            gray: "#F1F0FB",
+          },
         },
       },
       borderRadius: {
