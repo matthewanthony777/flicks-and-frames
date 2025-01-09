@@ -39,7 +39,6 @@ const Hero = () => {
             loop
             playsInline
             preload="auto"
-            loading="eager"
           >
             <source src="/chris-nolan-edit.mp4" type="video/mp4" />
             Your browser does not support the video tag.
