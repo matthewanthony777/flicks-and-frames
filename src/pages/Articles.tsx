@@ -4,6 +4,7 @@ import { Metadata } from "@/types/metadata";
 import { ArticleFilters } from "@/components/ArticleFilters";
 import type { ArticleFilters as Filters } from "@/components/ArticleFilters";
 import MDXVideo from "@/components/MDXVideo";
+import { Link } from "react-router-dom";
 
 interface ArticleMetadata extends Metadata {
   title: string;
@@ -76,36 +77,40 @@ const Articles = () => {
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {filteredArticles.map((article) => (
-                  <Card
+                  <Link 
+                    to={`/articles/${article.title.toLowerCase().replace(/ /g, "-")}`}
                     key={article.title}
-                    className="bg-cinema-gray border-cinema-gray/20 overflow-hidden"
                   >
-                    <div className="aspect-video w-full overflow-hidden">
-                      {article.coverVideo ? (
-                        <MDXVideo
-                          src={article.coverVideo}
-                          title={article.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : article.coverImage ? (
-                        <img
-                          src={article.coverImage}
-                          alt={article.title}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : null}
-                    </div>
-                    <CardHeader>
-                      <CardTitle className="text-white">{article.title}</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-300 mb-4">{article.description}</p>
-                      <div className="flex justify-between text-sm text-gray-400">
-                        <span>{article.author}</span>
-                        <span>{article.date}</span>
+                    <Card
+                      className="bg-cinema-gray border-cinema-gray/20 overflow-hidden hover:border-cinema-gold/50 transition-colors"
+                    >
+                      <div className="aspect-video w-full overflow-hidden">
+                        {article.coverVideo ? (
+                          <MDXVideo
+                            src={article.coverVideo}
+                            title={article.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : article.coverImage ? (
+                          <img
+                            src={article.coverImage}
+                            alt={article.title}
+                            className="w-full h-full object-cover"
+                          />
+                        ) : null}
                       </div>
-                    </CardContent>
-                  </Card>
+                      <CardHeader>
+                        <CardTitle className="text-white">{article.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-gray-300 mb-4">{article.description}</p>
+                        <div className="flex justify-between text-sm text-gray-400">
+                          <span>{article.author}</span>
+                          <span>{article.date}</span>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             )}
