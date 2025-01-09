@@ -1,9 +1,17 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { Button } from "./ui/button";
+import { useTheme } from "next-themes";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  // Wait until mounted to show theme toggle to prevent hydration mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const menuItems = [
     { name: "Home", href: "/" },
@@ -24,7 +32,7 @@ const Navigation = () => {
           </div>
           
           {/* Desktop Menu */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex md:items-center">
             <div className="ml-10 flex items-baseline space-x-8">
               {menuItems.map((item) => (
                 <a
@@ -36,10 +44,42 @@ const Navigation = () => {
                 </a>
               ))}
             </div>
+            
+            {/* Theme Toggle */}
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="ml-6 text-gray-300 hover:text-cinema-gold"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden flex items-center">
+            {mounted && (
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                className="mr-2 text-gray-300 hover:text-cinema-gold"
+                aria-label="Toggle theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="h-5 w-5" />
+                ) : (
+                  <Moon className="h-5 w-5" />
+                )}
+              </Button>
+            )}
             <Button
               variant="ghost"
               size="icon"
