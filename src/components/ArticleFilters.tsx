@@ -6,7 +6,6 @@ import { Search, X } from "lucide-react";
 export interface ArticleFilters {
   search: string;
   category: string;
-  tags: string[];
 }
 
 interface ArticleFiltersProps {
@@ -27,30 +26,15 @@ const categories = [
   "International Cinema",
 ];
 
-const availableTags = [
-  "drama",
-  "action",
-  "comedy",
-  "documentary",
-  "indie",
-  "foreign",
-  "classic",
-  "contemporary",
-  "experimental",
-  "animation",
-];
-
 export const ArticleFilters = ({ onFiltersChange }: ArticleFiltersProps) => {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   const handleSearchChange = (value: string) => {
     setSearch(value);
     onFiltersChange({
       search: value,
       category: selectedCategory,
-      tags: selectedTags,
     });
   };
 
@@ -59,30 +43,15 @@ export const ArticleFilters = ({ onFiltersChange }: ArticleFiltersProps) => {
     onFiltersChange({
       search,
       category: category === selectedCategory ? "" : category,
-      tags: selectedTags,
-    });
-  };
-
-  const handleTagToggle = (tag: string) => {
-    const newTags = selectedTags.includes(tag)
-      ? selectedTags.filter((t) => t !== tag)
-      : [...selectedTags, tag];
-    setSelectedTags(newTags);
-    onFiltersChange({
-      search,
-      category: selectedCategory,
-      tags: newTags,
     });
   };
 
   const clearFilters = () => {
     setSearch("");
     setSelectedCategory("");
-    setSelectedTags([]);
     onFiltersChange({
       search: "",
       category: "",
-      tags: [],
     });
   };
 
@@ -114,23 +83,7 @@ export const ArticleFilters = ({ onFiltersChange }: ArticleFiltersProps) => {
         </div>
       </div>
 
-      <div>
-        <h3 className="text-lg font-semibold text-white mb-3">Tags</h3>
-        <div className="flex flex-wrap gap-2">
-          {availableTags.map((tag) => (
-            <Button
-              key={tag}
-              variant={selectedTags.includes(tag) ? "default" : "outline"}
-              onClick={() => handleTagToggle(tag)}
-              className="text-sm"
-            >
-              {tag}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      {(search || selectedCategory || selectedTags.length > 0) && (
+      {(search || selectedCategory) && (
         <Button
           variant="ghost"
           onClick={clearFilters}

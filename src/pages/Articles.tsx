@@ -44,7 +44,6 @@ const Articles = () => {
   const [filters, setFilters] = useState<Filters>({
     search: "",
     category: "",
-    tags: [],
   });
 
   const filteredArticles = mockArticles.filter((article) => {
@@ -56,11 +55,7 @@ const Articles = () => {
     const matchesCategory =
       !filters.category || article.category === filters.category;
 
-    const matchesTags =
-      filters.tags.length === 0 ||
-      filters.tags.some((tag) => article.tags.includes(tag));
-
-    return matchesSearch && matchesCategory && matchesTags;
+    return matchesSearch && matchesCategory;
   });
 
   return (
@@ -85,16 +80,6 @@ const Articles = () => {
                   >
                     <CardHeader>
                       <CardTitle className="text-white">{article.title}</CardTitle>
-                      <div className="flex flex-wrap gap-2 mt-2">
-                        {article.tags.map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs bg-cinema-gold/20 text-cinema-gold px-2 py-1 rounded-full"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
                     </CardHeader>
                     <CardContent>
                       <p className="text-gray-300 mb-4">{article.description}</p>
