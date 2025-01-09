@@ -1,6 +1,16 @@
 import { Button } from "./ui/button";
+import { useEffect, useRef } from "react";
 
 const Hero = () => {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Preload the video when component mounts
+    if (videoRef.current) {
+      videoRef.current.load();
+    }
+  }, []);
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cinema-black">
       <div className="absolute inset-0 z-0">
@@ -17,15 +27,19 @@ const Hero = () => {
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
             className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none hidden"
+            loading="lazy"
           />
           
           {/* For local video files */}
           <video
+            ref={videoRef}
             className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
+            loading="eager"
           >
             <source src="/chris-nolan-edit.mp4" type="video/mp4" />
             Your browser does not support the video tag.
