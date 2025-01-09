@@ -27,8 +27,7 @@ const Hero = () => {
             loop
             playsInline
           >
-            {/* Replace 'your-video.mp4' with your actual video file name */}
-            <source src="/your-video.mp4" type="video/mp4" />
+            <source src="/chris-nolan-edit.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
