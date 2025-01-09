@@ -1,6 +1,8 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import MDXVideo from "@/components/MDXVideo";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 
 const ArticleView = () => {
   const { slug } = useParams();
@@ -10,9 +12,24 @@ const ArticleView = () => {
   return (
     <div className="min-h-screen bg-cinema-black py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-8">
+          <Link to="/articles">
+            <Button variant="ghost" className="text-white hover:text-gray-300">
+              <ChevronLeft className="mr-2 h-4 w-4" />
+              Back to Articles
+            </Button>
+          </Link>
+        </div>
+
         <Card className="bg-cinema-gray border-cinema-gray/20 p-8">
-          <h1 className="text-4xl font-bold text-white mb-4">Getting Started with Film</h1>
-          <p className="text-gray-400 mb-8">An introduction to the world of cinema</p>
+          <div className="mb-6">
+            <h1 className="text-4xl font-bold text-white mb-4">Getting Started with Film</h1>
+            <div className="flex items-center justify-between text-gray-400 text-sm mb-4">
+              <span>By Film Expert</span>
+              <span>March 14, 2024</span>
+            </div>
+            <p className="text-gray-400">An introduction to the world of cinema</p>
+          </div>
 
           <div className="prose prose-invert max-w-none">
             <p className="text-gray-300">Welcome to the wonderful world of cinema! This guide will help you understand the basics of filmmaking and appreciation.</p>
