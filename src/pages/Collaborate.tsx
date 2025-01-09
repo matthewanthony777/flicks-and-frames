@@ -13,6 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -35,21 +36,17 @@ const Collaborate = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      const { data, error } = await supabase.functions.invoke('send-email', {
+        body: {
           from: values.email,
           name: values.name,
           subject: values.subject,
           message: values.message,
-        }),
+        },
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send email');
+      if (error) {
+        throw error;
       }
 
       toast({
