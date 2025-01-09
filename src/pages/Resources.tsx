@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 
 type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
 
 const Resources = () => {
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
-
   const resourceTypes: ResourceType[] = ['book', 'podcast', 'screenplay', 'tool', 'product'];
 
   return (
