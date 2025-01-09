@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import Careers from "./pages/Careers";
 import Articles from "./pages/Articles";
 import ArticleView from "./pages/ArticleView";
+import Collaborate from "./pages/Collaborate";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const App = () => (
             <Route path="/careers" element={<Careers />} />
             <Route path="/articles" element={<Articles />} />
             <Route path="/articles/:slug" element={<ArticleView />} />
+            <Route path="/collaborate" element={<Collaborate />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>

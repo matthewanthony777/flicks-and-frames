@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Metadata } from "@/types/metadata";
 import { ArticleFilters } from "@/components/ArticleFilters";
@@ -44,6 +44,10 @@ const mockArticles: ArticleMetadata[] = [
 ];
 
 const Articles = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [filters, setFilters] = useState<Filters>({
     search: "",
     category: "",
