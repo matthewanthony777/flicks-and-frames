@@ -3,14 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Metadata } from "@/types/metadata";
 import { ArticleFilters } from "@/components/ArticleFilters";
 import type { ArticleFilters as Filters } from "@/components/ArticleFilters";
+import MDXVideo from "@/components/MDXVideo";
 
 interface ArticleMetadata extends Metadata {
   title: string;
   description: string;
   date: string;
-  tags: string[];
   author: string;
   category: string;
+  coverImage?: string;
+  coverVideo?: string;
 }
 
 const mockArticles: ArticleMetadata[] = [
@@ -18,25 +20,25 @@ const mockArticles: ArticleMetadata[] = [
     title: "Getting Started with Film",
     description: "An introduction to the world of cinema",
     date: "2024-03-14",
-    tags: ["beginners", "film-basics", "cinema"],
     author: "Film Expert",
     category: "Film Articles",
+    coverVideo: "/chris-nolan-edit.mp4"
   },
   {
     title: "The Art of Cinematography",
     description: "Understanding the visual language of film",
     date: "2024-03-14",
-    tags: ["cinematography", "technical", "classic"],
     author: "Camera Expert",
     category: "Cinematography",
+    coverImage: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81"
   },
   {
     title: "International Cinema Spotlight",
     description: "Exploring global film movements",
     date: "2024-03-14",
-    tags: ["foreign", "indie", "contemporary"],
     author: "World Cinema Expert",
     category: "International Cinema",
+    coverImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
   },
 ];
 
@@ -76,8 +78,23 @@ const Articles = () => {
                 {filteredArticles.map((article) => (
                   <Card
                     key={article.title}
-                    className="bg-cinema-gray border-cinema-gray/20"
+                    className="bg-cinema-gray border-cinema-gray/20 overflow-hidden"
                   >
+                    <div className="aspect-video w-full overflow-hidden">
+                      {article.coverVideo ? (
+                        <MDXVideo
+                          src={article.coverVideo}
+                          title={article.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : article.coverImage ? (
+                        <img
+                          src={article.coverImage}
+                          alt={article.title}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : null}
+                    </div>
                     <CardHeader>
                       <CardTitle className="text-white">{article.title}</CardTitle>
                     </CardHeader>
