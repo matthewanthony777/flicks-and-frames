@@ -1,37 +1,25 @@
 import { Metadata } from "@/types/metadata";
 
-const GITHUB_REPO = "matthewanthony777/flicks-and-frames";
-const GITHUB_BRANCH = "main";
-const ARTICLES_PATH = "content/articles";
-
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
     console.log("Starting article fetch...");
-    console.log(`Repository: ${GITHUB_REPO}`);
-    console.log(`Branch: ${GITHUB_BRANCH}`);
-    console.log(`Path: ${ARTICLES_PATH}`);
     
-    const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`;
-    console.log(`Making request to: ${apiUrl}`);
-
-    // Add headers for better rate limiting and caching
+    // Configure the correct GitHub API URL and headers
+    const owner = "matthewanthony777";
+    const repo = "flicks-and-frames";
+    const path = "content/articles";
+    const branch = "main";
+    
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`;
+    console.log("Making request to:", apiUrl);
+    
     const headers = {
       'Accept': 'application/vnd.github.v3+json',
       'Cache-Control': 'max-age=300'
     };
-    
+
     const response = await fetch(apiUrl, { headers });
     
-    // Handle rate limit error first
-    if (response.status === 403) {
-      const errorText = await response.text();
-      console.error("GitHub API Error (403):", errorText);
-      if (errorText.includes("API rate limit exceeded")) {
-        throw new Error("GitHub API rate limit exceeded. Please try again later.");
-      }
-      throw new Error(`GitHub API request failed with 403: ${errorText}`);
-    }
-
     if (!response.ok) {
       const errorText = await response.text();
       console.error("GitHub API Error Details:");
@@ -107,6 +95,7 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     const validArticles = articles.filter((article): article is Metadata => article !== null);
     
     if (validArticles.length === 0) {
+      console.error("No valid articles found");
       throw new Error("No valid articles found");
     }
     
