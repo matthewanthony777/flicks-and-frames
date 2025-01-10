@@ -16,11 +16,19 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     
     const response = await fetch(apiUrl);
     
+    if (response.status === 403) {
+      const errorBody = await response.clone().text();
+      if (errorBody.includes("API rate limit exceeded")) {
+        console.error("GitHub API rate limit exceeded. Please try again later.");
+        throw new Error("GitHub API rate limit exceeded. Please try again later.");
+      }
+    }
+
     if (!response.ok) {
+      const errorBody = await response.clone().text();
       console.error("GitHub API Error Details:");
       console.error(`Status: ${response.status}`);
       console.error(`Status Text: ${response.statusText}`);
-      const errorBody = await response.text();
       console.error(`Response body: ${errorBody}`);
       throw new Error(`GitHub API request failed: ${errorBody}`);
     }
@@ -42,7 +50,9 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
             return null;
           }
           
-          const content = await contentResponse.text();
+          // Clone the response before reading it
+          const contentClone = contentResponse.clone();
+          const content = await contentClone.text();
           
           // Parse frontmatter from MDX content
           const frontmatterMatch = content.match(/---\n([\s\S]*?)\n---/);
