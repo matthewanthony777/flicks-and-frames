@@ -1,13 +1,14 @@
 import { Metadata } from "@/types/metadata";
 
 // Update these constants to match your actual GitHub repository
-const GITHUB_REPO = "matthewanthony777/flicks-and-frames";
+const GITHUB_REPO = "matthewbarr/flicks-and-frames"; // This needs to be your actual GitHub username/repo
 const GITHUB_BRANCH = "main";
-const ARTICLES_PATH = "content/articles"; // Updated path to correct location
+const ARTICLES_PATH = "content/articles";
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
     console.log(`Fetching articles from: ${ARTICLES_PATH}`);
+    console.log(`Full GitHub URL: https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`);
     
     const response = await fetch(
       `https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`
