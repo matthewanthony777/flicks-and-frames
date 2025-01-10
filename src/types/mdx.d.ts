@@ -2,7 +2,7 @@ declare module '*.mdx' {
   import { ComponentType } from 'react';
   
   const Component: ComponentType & {
-    metadata?: {
+    metadata: {
       title: string;
       type: string;
       description: string;

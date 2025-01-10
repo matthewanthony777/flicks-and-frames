@@ -1,13 +1,12 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import nosferatuScreenplay from '@/content/resources/nosferatu-screenplay.mdx';
 
 type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
 
 interface MDXModule {
   default: React.ComponentType;
-  metadata?: {
+  metadata: {
     title: string;
     type: ResourceType;
     description: string;
