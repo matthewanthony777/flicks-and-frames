@@ -24,12 +24,20 @@ const mockCareerArticles: CareerArticle[] = [
     slug: "getting-started-career"
   },
   {
-    title: "Film Industry Pathways",
-    description: "Exploring different career paths in cinema",
-    date: "2024-03-14",
-    author: "Industry Expert",
-    category: "Career Guide",
-    slug: "film-industry-pathways"
+    title: "Film Industry Career Paths",
+    description: "Explore diverse career opportunities in the film industry",
+    date: "2024-03-15",
+    author: "CineVerse Team",
+    category: "Careers",
+    slug: "film-industry-careers"
+  },
+  {
+    title: "Film Education Resources",
+    description: "Educational resources and learning paths for aspiring filmmakers",
+    date: "2024-03-15",
+    author: "CineVerse Team",
+    category: "Education",
+    slug: "education-resources"
   }
 ];
 
