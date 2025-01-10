@@ -17,14 +17,19 @@ const ArticleView = () => {
   useEffect(() => {
     const loadArticle = async () => {
       try {
+        // Map of normalized titles to actual filenames
+        const fileMap: Record<string, string> = {
+          'folk-horror': 'Robert-eggers',
+          'all-things-christopher': 'chris-nolan-time',
+          'getting-started-with-film': 'getting-started-with-film'
+        };
+
         const articles = await getArticleMetadata();
         console.log("Available articles:", articles.map(a => a.title));
         
-        // Convert the slug to a format that matches how we'll transform the article titles
         const normalizedSlug = slug?.toLowerCase();
         console.log("Looking for article with normalized slug:", normalizedSlug);
         
-        // Find the article by comparing normalized versions of both the slug and title
         const foundArticle = articles.find((article) => {
           const normalizedTitle = article.title.toLowerCase().replace(/ /g, "-");
           return normalizedTitle === normalizedSlug;
@@ -39,8 +44,9 @@ const ArticleView = () => {
         console.log("Found matching article:", foundArticle.title);
         setArticle(foundArticle);
         
-        // Use the exact filename from the available articles
-        const filename = foundArticle.title.toLowerCase().replace(/ /g, "-");
+        // Use the mapping to get the correct filename
+        const normalizedTitle = foundArticle.title.toLowerCase().replace(/ /g, "-");
+        const filename = fileMap[normalizedTitle] || normalizedTitle;
         console.log("Attempting to fetch MDX file:", filename);
         
         const response = await fetch(`https://raw.githubusercontent.com/matthewanthony777/flicks-and-frames/main/content/articles/${filename}.mdx`);
