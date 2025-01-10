@@ -1,7 +1,7 @@
 import { Metadata } from "@/types/metadata";
 
-const GITHUB_REPO = "your-username/your-repo"; // Replace with your actual GitHub repository
-const GITHUB_BRANCH = "main"; // Replace with your branch name
+const GITHUB_REPO = "mattbarr1/mattbarr-blog"; // Updated to your actual repository
+const GITHUB_BRANCH = "main"; // Assuming your main branch is called "main"
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
