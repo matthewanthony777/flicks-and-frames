@@ -18,9 +18,11 @@ const ArticleView = () => {
     const loadArticle = async () => {
       try {
         const articles = await getArticleMetadata();
+        console.log("Available articles:", articles.map(a => a.title));
         
         // Convert the slug to a format that matches how we'll transform the article titles
         const normalizedSlug = slug?.toLowerCase();
+        console.log("Looking for article with normalized slug:", normalizedSlug);
         
         // Find the article by comparing normalized versions of both the slug and title
         const foundArticle = articles.find((article) => {
@@ -34,11 +36,13 @@ const ArticleView = () => {
           return;
         }
 
+        console.log("Found matching article:", foundArticle.title);
         setArticle(foundArticle);
         
-        // Create the filename from the original title to match the actual file in GitHub
-        // Convert to lowercase to ensure consistent casing
+        // Use the exact filename from the available articles
         const filename = foundArticle.title.toLowerCase().replace(/ /g, "-");
+        console.log("Attempting to fetch MDX file:", filename);
+        
         const response = await fetch(`https://raw.githubusercontent.com/matthewanthony777/flicks-and-frames/main/content/articles/${filename}.mdx`);
         
         if (!response.ok) {
