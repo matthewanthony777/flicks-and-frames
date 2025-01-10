@@ -1,9 +1,9 @@
 import { Metadata } from "@/types/metadata";
 
 // Update these constants to match your actual GitHub repository
-const GITHUB_REPO = "mattbarr1/flicks-and-frames";
+const GITHUB_REPO = "matthewanthony777/flicks-and-frames";
 const GITHUB_BRANCH = "main";
-const ARTICLES_PATH = "src/content/articles"; // Updated to correct path
+const ARTICLES_PATH = "src/content/articles"; // Path to articles in the repository
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
