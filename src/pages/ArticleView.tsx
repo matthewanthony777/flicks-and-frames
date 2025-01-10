@@ -58,7 +58,16 @@ const ArticleView = () => {
         }
 
         const mdxContent = await response.text();
-        setContent(mdxContent);
+        
+        // Process the MDX content to separate frontmatter and content
+        const parts = mdxContent.split('---');
+        if (parts.length >= 3) {
+          // The content is everything after the second '---'
+          const articleContent = parts.slice(2).join('---').trim();
+          setContent(articleContent);
+        } else {
+          setError("Invalid article format");
+        }
       } catch (error) {
         console.error("Error loading article:", error);
         setError("An error occurred while loading the article");
@@ -116,9 +125,6 @@ const ArticleView = () => {
     );
   }
 
-  // Extract the content part from the MDX file (remove frontmatter)
-  const contentWithoutFrontmatter = content.split('---').slice(2).join('---').trim();
-
   return (
     <div className="min-h-screen bg-cinema-black py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -141,8 +147,18 @@ const ArticleView = () => {
             <p className="text-gray-400">{article.description}</p>
           </div>
 
+          {article.coverVideo && (
+            <div className="mb-8">
+              <MDXVideo
+                src={article.coverVideo}
+                title={article.title}
+                className="w-full rounded-lg"
+              />
+            </div>
+          )}
+
           <div className="prose prose-invert max-w-none">
-            <div dangerouslySetInnerHTML={{ __html: contentWithoutFrontmatter }} />
+            <div dangerouslySetInnerHTML={{ __html: content }} />
           </div>
         </Card>
       </div>
