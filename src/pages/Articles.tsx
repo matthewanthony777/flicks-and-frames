@@ -5,55 +5,28 @@ import { ArticleFilters } from "@/components/ArticleFilters";
 import type { ArticleFilters as Filters } from "@/components/ArticleFilters";
 import MDXVideo from "@/components/MDXVideo";
 import { Link } from "react-router-dom";
-
-interface ArticleMetadata extends Metadata {
-  title: string;
-  description: string;
-  date: string;
-  author: string;
-  category: string;
-  coverImage?: string;
-  coverVideo?: string;
-}
-
-const mockArticles: ArticleMetadata[] = [
-  {
-    title: "Getting Started with Film",
-    description: "An introduction to the world of cinema",
-    date: "2024-03-14",
-    author: "Film Expert",
-    category: "Film Articles",
-    coverVideo: "/chris-nolan-edit.mp4"
-  },
-  {
-    title: "The Art of Cinematography",
-    description: "Understanding the visual language of film",
-    date: "2024-03-14",
-    author: "Camera Expert",
-    category: "Cinematography",
-    coverImage: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81"
-  },
-  {
-    title: "International Cinema Spotlight",
-    description: "Exploring global film movements",
-    date: "2024-03-14",
-    author: "World Cinema Expert",
-    category: "International Cinema",
-    coverImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
-  },
-];
+import { getArticleMetadata } from "@/utils/articleUtils";
 
 const Articles = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  const [articles, setArticles] = useState<Metadata[]>([]);
   const [filters, setFilters] = useState<Filters>({
     search: "",
     category: "",
   });
 
-  const filteredArticles = mockArticles.filter((article) => {
+  useEffect(() => {
+    const loadArticles = async () => {
+      const metadata = await getArticleMetadata();
+      setArticles(metadata);
+    };
+    loadArticles();
+  }, []);
+
+  const filteredArticles = articles.filter((article) => {
     const matchesSearch =
       !filters.search ||
       article.title.toLowerCase().includes(filters.search.toLowerCase()) ||

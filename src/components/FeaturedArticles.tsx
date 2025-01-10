@@ -2,47 +2,23 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import MDXVideo from "./MDXVideo";
-
-interface ArticleMetadata {
-  title: string;
-  description: string;
-  date: string;
-  author: string;
-  category: string;
-  coverImage?: string;
-  coverVideo?: string;
-}
-
-const mockArticles: ArticleMetadata[] = [
-  {
-    title: "Getting Started with Film",
-    description: "An introduction to the world of cinema",
-    date: "2024-03-14",
-    author: "Film Expert",
-    category: "Film Articles",
-    coverVideo: "/chris-nolan-edit.mp4"
-  },
-  {
-    title: "The Art of Cinematography",
-    description: "Understanding the visual language of film",
-    date: "2024-03-13",
-    author: "Camera Expert",
-    category: "Cinematography",
-    coverImage: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81"
-  },
-  {
-    title: "International Cinema Spotlight",
-    description: "Exploring global film movements",
-    date: "2024-03-12",
-    author: "World Cinema Expert",
-    category: "International Cinema",
-    coverImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b"
-  },
-];
+import { useEffect, useState } from "react";
+import { Metadata } from "@/types/metadata";
+import { getArticleMetadata } from "@/utils/articleUtils";
 
 const FeaturedArticles = () => {
+  const [articles, setArticles] = useState<Metadata[]>([]);
+
+  useEffect(() => {
+    const loadArticles = async () => {
+      const metadata = await getArticleMetadata();
+      setArticles(metadata);
+    };
+    loadArticles();
+  }, []);
+
   // Sort articles by date in descending order (most recent first)
-  const sortedArticles = [...mockArticles].sort((a, b) => 
+  const sortedArticles = [...articles].sort((a, b) => 
     new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 
