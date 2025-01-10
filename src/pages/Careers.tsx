@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { MDXProvider } from '@mdx-js/react';
 import PageTransition from "../components/PageTransition";
 import { motion } from "framer-motion";
