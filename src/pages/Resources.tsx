@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import nosferatuScreenplay from '@/content/resources/nosferatu-screenplay.mdx';
-
-type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
+import type { ResourceType } from '@/types/mdx';
 
 const Resources = () => {
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
@@ -12,9 +11,9 @@ const Resources = () => {
   const mdxModules = [nosferatuScreenplay];
 
   // Filter resources based on selected type
-  const filteredResources = mdxModules.filter(
-    resource => !selectedType || resource.metadata.type === selectedType
-  );
+  const filteredResources = selectedType
+    ? mdxModules.filter(resource => resource.metadata.type === selectedType)
+    : mdxModules;
 
   return (
     <div className="container mx-auto px-4 py-24">
@@ -34,14 +33,11 @@ const Resources = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredResources.map((resource, index) => {
-          const ResourceComponent = resource;
-          return (
-            <div key={index}>
-              <ResourceComponent />
-            </div>
-          );
-        })}
+        {filteredResources.map((Resource, index) => (
+          <div key={index}>
+            <Resource />
+          </div>
+        ))}
       </div>
     </div>
   );
