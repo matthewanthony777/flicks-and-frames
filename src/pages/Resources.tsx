@@ -4,7 +4,7 @@ import nosferatuScreenplay from '@/content/resources/nosferatu-screenplay.mdx';
 
 type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
 
-interface MDXModule {
+interface ResourceComponent {
   default: React.ComponentType;
   metadata: {
     title: string;
@@ -18,7 +18,7 @@ const Resources = () => {
   const resourceTypes: ResourceType[] = ['book', 'podcast', 'screenplay', 'tool', 'product'];
 
   // Create an array of MDX modules
-  const mdxModules: MDXModule[] = [nosferatuScreenplay];
+  const mdxModules: ResourceComponent[] = [nosferatuScreenplay];
 
   // Filter resources based on selected type
   const filteredResources = mdxModules.filter(
