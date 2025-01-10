@@ -18,7 +18,7 @@ const AnimatedRoutes = () => {
   const location = useLocation();
   
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait" initial={false}>
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Index />} />
         <Route path="/careers" element={<Careers />} />
@@ -34,12 +34,14 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="dark" attribute="class">
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Navigation />
-          <AnimatedRoutes />
-        </BrowserRouter>
+        <div className="min-h-screen bg-background transition-colors duration-300">
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Navigation />
+            <AnimatedRoutes />
+          </BrowserRouter>
+        </div>
       </TooltipProvider>
     </ThemeProvider>
   </QueryClientProvider>
