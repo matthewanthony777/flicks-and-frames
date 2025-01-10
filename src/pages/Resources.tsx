@@ -17,9 +17,12 @@ const Resources = () => {
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
   const resourceTypes: ResourceType[] = ['book', 'podcast', 'screenplay', 'tool', 'product'];
 
+  // Create an array of MDX modules
+  const mdxModules: MDXModule[] = [nosferatuScreenplay];
+
   // Filter resources based on selected type
-  const resources = [nosferatuScreenplay as unknown as MDXModule].filter(
-    resource => !selectedType || resource.metadata?.type === selectedType
+  const filteredResources = mdxModules.filter(
+    resource => !selectedType || resource.metadata.type === selectedType
   );
 
   return (
@@ -40,11 +43,14 @@ const Resources = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {resources.map((Resource, index) => (
-          <div key={index}>
-            <Resource.default />
-          </div>
-        ))}
+        {filteredResources.map((resource, index) => {
+          const ResourceComponent = resource.default;
+          return (
+            <div key={index}>
+              <ResourceComponent />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
