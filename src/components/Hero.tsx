@@ -16,21 +16,6 @@ const Hero = () => {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-t from-cinema-black via-cinema-black/90 to-transparent" />
         <div className="w-full h-full">
-          {/* For YouTube video */}
-          <iframe 
-            width="100%" 
-            height="100%" 
-            src="https://www.youtube.com/embed/6hNlpOSDr1w?si=QcBsfx8aNi8IrjT7&start=5&autoplay=1&mute=1&controls=0&loop=1&playlist=6hNlpOSDr1w" 
-            title="YouTube video player" 
-            frameBorder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-            referrerPolicy="strict-origin-when-cross-origin"
-            allowFullScreen
-            className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none hidden"
-            loading="lazy"
-          />
-          
-          {/* For local video files */}
           <video
             ref={videoRef}
             className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
