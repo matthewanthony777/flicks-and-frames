@@ -14,10 +14,9 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`;
     console.log(`Making request to: ${apiUrl}`);
 
-    // Add headers to increase rate limit
+    // Add headers for better rate limiting and caching
     const headers = {
       'Accept': 'application/vnd.github.v3+json',
-      // Using a token-less request with increased cache time
       'Cache-Control': 'max-age=300'
     };
     
