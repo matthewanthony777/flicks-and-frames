@@ -5,13 +5,22 @@ import nosferatuScreenplay from '@/content/resources/nosferatu-screenplay.mdx';
 
 type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
 
+interface MDXModule {
+  default: React.ComponentType;
+  metadata?: {
+    title: string;
+    type: ResourceType;
+    description: string;
+  };
+}
+
 const Resources = () => {
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
   const resourceTypes: ResourceType[] = ['book', 'podcast', 'screenplay', 'tool', 'product'];
 
   // Filter resources based on selected type
-  const resources = [nosferatuScreenplay].filter(
-    resource => !selectedType || resource.frontmatter.type === selectedType
+  const resources = [nosferatuScreenplay as unknown as MDXModule].filter(
+    resource => !selectedType || resource.metadata?.type === selectedType
   );
 
   return (
