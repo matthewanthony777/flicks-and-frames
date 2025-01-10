@@ -2,6 +2,7 @@ import Hero from "../components/Hero";
 import FeaturedArticles from "../components/FeaturedArticles";
 import Newsletter from "../components/Newsletter";
 import PageTransition from "../components/PageTransition";
+import SocialLinks from "../components/SocialLinks";
 
 const Index = () => {
   return (
@@ -10,6 +11,7 @@ const Index = () => {
         <Hero />
         <FeaturedArticles />
         <Newsletter />
+        <SocialLinks />
       </div>
     </PageTransition>
   );
