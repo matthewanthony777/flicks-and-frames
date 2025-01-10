@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { Card } from "@/components/ui/card";
 import MDXVideo from "@/components/MDXVideo";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,10 @@ import { getArticleMetadata } from "@/utils/articleUtils";
 
 const ArticleView = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [article, setArticle] = useState<Metadata | null>(null);
   const [content, setContent] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadArticle = async () => {
@@ -20,23 +22,60 @@ const ArticleView = () => {
           (article) => article.title.toLowerCase().replace(/ /g, "-") === slug
         );
         
-        if (foundArticle) {
-          setArticle(foundArticle);
-          
-          // Fetch the actual MDX content
-          const response = await fetch(`https://raw.githubusercontent.com/matthewanthony777/flicks-and-frames/main/content/articles/${foundArticle.title.toLowerCase().replace(/ /g, "-")}.mdx`);
-          if (!response.ok) {
-            throw new Error(`Failed to fetch article content: ${response.statusText}`);
-          }
-          const mdxContent = await response.text();
-          setContent(mdxContent);
+        if (!foundArticle) {
+          setError("Article not found");
+          return;
         }
+
+        setArticle(foundArticle);
+        
+        // Fetch the actual MDX content
+        const response = await fetch(`https://raw.githubusercontent.com/matthewanthony777/flicks-and-frames/main/content/articles/${foundArticle.title.toLowerCase().replace(/ /g, "-")}.mdx`);
+        
+        if (!response.ok) {
+          console.error(`Failed to fetch article content: ${response.statusText}`);
+          setError("Failed to load article content");
+          return;
+        }
+
+        const mdxContent = await response.text();
+        setContent(mdxContent);
       } catch (error) {
         console.error("Error loading article:", error);
+        setError("An error occurred while loading the article");
       }
     };
     loadArticle();
   }, [slug]);
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-cinema-black py-20">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <Link to="/articles">
+              <Button variant="ghost" className="text-white hover:text-gray-300">
+                <ChevronLeft className="mr-2 h-4 w-4" />
+                Back to Articles
+              </Button>
+            </Link>
+          </div>
+          <Card className="bg-cinema-gray border-cinema-gray/20 p-8">
+            <div className="text-center">
+              <h2 className="text-2xl font-bold text-white mb-4">{error}</h2>
+              <p className="text-gray-400 mb-6">The article you're looking for doesn't exist or couldn't be loaded.</p>
+              <Button 
+                onClick={() => navigate('/articles')}
+                className="bg-primary hover:bg-primary/90"
+              >
+                Browse All Articles
+              </Button>
+            </div>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   if (!article || !content) {
     return (
@@ -51,7 +90,7 @@ const ArticleView = () => {
             </Link>
           </div>
           <Card className="bg-cinema-gray border-cinema-gray/20 p-8">
-            <p className="text-white">Article not found or loading...</p>
+            <p className="text-white">Loading article...</p>
           </Card>
         </div>
       </div>
