@@ -6,7 +6,6 @@ import Newsletter from "../components/Newsletter";
 const Index = () => {
   return (
     <div className="min-h-screen bg-cinema-black text-white">
-      <Navigation />
       <Hero />
       <FeaturedArticles />
       <Newsletter />
