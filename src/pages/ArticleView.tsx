@@ -18,19 +18,26 @@ const ArticleView = () => {
     const loadArticle = async () => {
       try {
         const articles = await getArticleMetadata();
-        const foundArticle = articles.find(
-          (article) => article.title.toLowerCase().replace(/ /g, "-") === slug
-        );
+        
+        // Convert the slug to a format that matches how we'll transform the article titles
+        const normalizedSlug = slug?.toLowerCase();
+        
+        // Find the article by comparing normalized versions of both the slug and title
+        const foundArticle = articles.find((article) => {
+          const normalizedTitle = article.title.toLowerCase().replace(/ /g, "-");
+          return normalizedTitle === normalizedSlug;
+        });
         
         if (!foundArticle) {
+          console.error(`No article found matching slug: ${slug}`);
           setError("Article not found");
           return;
         }
 
         setArticle(foundArticle);
         
-        // Fetch the actual MDX content
-        const response = await fetch(`https://raw.githubusercontent.com/matthewanthony777/flicks-and-frames/main/content/articles/${foundArticle.title.toLowerCase().replace(/ /g, "-")}.mdx`);
+        // Use the exact filename from the article metadata for fetching
+        const response = await fetch(`https://raw.githubusercontent.com/matthewanthony777/flicks-and-frames/main/content/articles/${slug}.mdx`);
         
         if (!response.ok) {
           console.error(`Failed to fetch article content: ${response.statusText}`);
