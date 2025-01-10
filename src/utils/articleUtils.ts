@@ -13,21 +13,28 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     
     const apiUrl = `https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`;
     console.log(`Making request to: ${apiUrl}`);
+
+    // Add headers to increase rate limit
+    const headers = {
+      'Accept': 'application/vnd.github.v3+json',
+      // Using a token-less request with increased cache time
+      'Cache-Control': 'max-age=300'
+    };
     
-    const response = await fetch(apiUrl);
-    const responseClone = response.clone(); // Clone response before first use
+    const response = await fetch(apiUrl, { headers });
     
-    // Check for rate limit first
+    // Handle rate limit error first
     if (response.status === 403) {
-      const errorText = await responseClone.text();
+      const errorText = await response.text();
+      console.error("GitHub API Error (403):", errorText);
       if (errorText.includes("API rate limit exceeded")) {
-        console.error("GitHub API rate limit exceeded. Please try again later.");
         throw new Error("GitHub API rate limit exceeded. Please try again later.");
       }
+      throw new Error(`GitHub API request failed with 403: ${errorText}`);
     }
 
     if (!response.ok) {
-      const errorText = await responseClone.text();
+      const errorText = await response.text();
       console.error("GitHub API Error Details:");
       console.error(`Status: ${response.status}`);
       console.error(`Status Text: ${response.statusText}`);
@@ -45,7 +52,7 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
       mdxFiles.map(async (file: any) => {
         try {
           console.log(`Fetching content for: ${file.name}`);
-          const contentResponse = await fetch(file.download_url);
+          const contentResponse = await fetch(file.download_url, { headers });
           
           if (!contentResponse.ok) {
             console.error(`Failed to fetch content for ${file.name}`);
