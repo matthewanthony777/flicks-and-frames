@@ -15,22 +15,24 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     console.log(`Making request to: ${apiUrl}`);
     
     const response = await fetch(apiUrl);
+    const responseClone = response.clone(); // Clone response before first use
     
+    // Check for rate limit first
     if (response.status === 403) {
-      const errorBody = await response.clone().text();
-      if (errorBody.includes("API rate limit exceeded")) {
+      const errorText = await responseClone.text();
+      if (errorText.includes("API rate limit exceeded")) {
         console.error("GitHub API rate limit exceeded. Please try again later.");
         throw new Error("GitHub API rate limit exceeded. Please try again later.");
       }
     }
 
     if (!response.ok) {
-      const errorBody = await response.clone().text();
+      const errorText = await responseClone.text();
       console.error("GitHub API Error Details:");
       console.error(`Status: ${response.status}`);
       console.error(`Status Text: ${response.statusText}`);
-      console.error(`Response body: ${errorBody}`);
-      throw new Error(`GitHub API request failed: ${errorBody}`);
+      console.error(`Response body: ${errorText}`);
+      throw new Error(`GitHub API request failed: ${errorText}`);
     }
 
     const files = await response.json();
@@ -50,12 +52,10 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
             return null;
           }
           
-          // Clone the response before reading it
-          const contentClone = contentResponse.clone();
-          const content = await contentClone.text();
+          const contentText = await contentResponse.text();
           
           // Parse frontmatter from MDX content
-          const frontmatterMatch = content.match(/---\n([\s\S]*?)\n---/);
+          const frontmatterMatch = contentText.match(/---\n([\s\S]*?)\n---/);
           if (!frontmatterMatch) {
             console.error(`No frontmatter found in ${file.name}`);
             return null;
@@ -109,6 +109,6 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     
   } catch (error) {
     console.error("Error in getArticleMetadata:", error);
-    throw error; // Re-throw the error to be handled by the calling code
+    throw error;
   }
 };
