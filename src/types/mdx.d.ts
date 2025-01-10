@@ -1,6 +1,6 @@
+import type { ComponentType } from 'react';
+
 declare module '*.mdx' {
-  import type { ComponentType } from 'react';
-  
   export type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
   
   export interface MDXMetadata {
