@@ -5,9 +5,9 @@ const GITHUB_BRANCH = "main";
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
-    // Fetch the list of files from the content/articles directory
+    // Fetch the list of files from the articles directory
     const response = await fetch(
-      `https://api.github.com/repos/${GITHUB_REPO}/contents/content/articles?ref=${GITHUB_BRANCH}`
+      `https://api.github.com/repos/${GITHUB_REPO}/contents/articles?ref=${GITHUB_BRANCH}`
     );
     
     if (!response.ok) {
