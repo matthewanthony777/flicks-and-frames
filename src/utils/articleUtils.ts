@@ -1,13 +1,13 @@
 import { Metadata } from "@/types/metadata";
 
-const GITHUB_REPO = "mattbarr1/mattbarr-blog"; // Updated to your actual repository
-const GITHUB_BRANCH = "main"; // Assuming your main branch is called "main"
+const GITHUB_REPO = "mattbarr1/mattbarr-blog";
+const GITHUB_BRANCH = "main";
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
     // Fetch the list of files from the content/articles directory
     const response = await fetch(
-      `https://api.github.com/repos/${GITHUB_REPO}/contents/src/content/articles?ref=${GITHUB_BRANCH}`
+      `https://api.github.com/repos/${GITHUB_REPO}/contents/content/articles?ref=${GITHUB_BRANCH}`
     );
     
     if (!response.ok) {
