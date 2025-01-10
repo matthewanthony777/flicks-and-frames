@@ -1,34 +1,6 @@
 import { Metadata } from "@/types/metadata";
 
-// Mock data for development fallback
-const mockArticles: Metadata[] = [
-  {
-    title: "All Things Christopher",
-    description: "Examining Nolans love of time",
-    date: "2024-03-14",
-    author: "Matthew Barr",
-    category: "Film Articles",
-    coverVideo: "/chris-nolan-edit.mp4"
-  },
-  {
-    title: "Getting Started with Film",
-    description: "An introduction to the world of cinema",
-    date: "2024-03-14",
-    author: "Film Expert",
-    category: "Film Articles",
-    coverVideo: "/chris-nolan-edit.mp4"
-  },
-  {
-    title: "Folk Horror",
-    description: "Examining Eggers Cinematography",
-    date: "2024-03-14",
-    author: "Matthew Barr",
-    category: "Cinematography",
-    coverVideo: "/chris-nolan-edit.mp4"
-  }
-];
-
-const GITHUB_REPO = "matthewanthony777/flicks-and-frames"; // Updated to your actual repository
+const GITHUB_REPO = "matthewanthony777/flicks-and-frames";
 const GITHUB_BRANCH = "main";
 const ARTICLES_PATH = "content/articles";
 
@@ -50,9 +22,7 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
       console.error(`Status Text: ${response.statusText}`);
       const errorBody = await response.text();
       console.error(`Response body: ${errorBody}`);
-      
-      console.log("Falling back to mock data due to API error");
-      return mockArticles;
+      throw new Error(`GitHub API request failed: ${errorBody}`);
     }
 
     const files = await response.json();
@@ -121,8 +91,7 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     const validArticles = articles.filter((article): article is Metadata => article !== null);
     
     if (validArticles.length === 0) {
-      console.log("No valid articles found, falling back to mock data");
-      return mockArticles;
+      throw new Error("No valid articles found");
     }
     
     console.log(`Successfully processed ${validArticles.length} articles`);
@@ -130,7 +99,6 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     
   } catch (error) {
     console.error("Error in getArticleMetadata:", error);
-    console.log("Falling back to mock data due to error");
-    return mockArticles;
+    throw error; // Re-throw the error to be handled by the calling code
   }
 };
