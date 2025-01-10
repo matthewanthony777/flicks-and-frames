@@ -3,7 +3,7 @@ declare module '*.mdx' {
   
   export type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
   
-  export interface MDXContent extends ComponentType<{}> {
+  export interface MDXContent extends ComponentType {
     metadata: {
       title: string;
       type: ResourceType;

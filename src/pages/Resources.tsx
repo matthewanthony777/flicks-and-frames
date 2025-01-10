@@ -1,18 +1,24 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import nosferatuScreenplay from '@/content/resources/nosferatu-screenplay.mdx';
+import finalDraftGuide from '@/content/resources/final-draft-guide.mdx';
+import screenplayTools from '@/content/resources/screenplay-writing-tools.mdx';
 import type { ResourceType, MDXContent } from '@/types/mdx';
 
 const Resources = () => {
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
   const resourceTypes: ResourceType[] = ['book', 'podcast', 'screenplay', 'tool', 'product'];
 
-  // Create an array of MDX modules
-  const mdxModules: MDXContent[] = [nosferatuScreenplay];
+  // Create an array of MDX modules with their metadata
+  const mdxModules = [
+    nosferatuScreenplay,
+    finalDraftGuide,
+    screenplayTools
+  ];
 
   // Filter resources based on selected type
   const filteredResources = selectedType
-    ? mdxModules.filter(resource => resource.metadata.type === selectedType)
+    ? mdxModules.filter(resource => resource.metadata?.type === selectedType)
     : mdxModules;
 
   return (
@@ -34,7 +40,7 @@ const Resources = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredResources.map((Resource, index) => (
-          <div key={index}>
+          <div key={index} className="w-full">
             <Resource />
           </div>
         ))}
