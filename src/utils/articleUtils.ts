@@ -3,7 +3,7 @@ import { Metadata } from "@/types/metadata";
 // Update these constants to match your actual GitHub repository
 const GITHUB_REPO = "matthewanthony777/flicks-and-frames";
 const GITHUB_BRANCH = "main";
-const ARTICLES_PATH = "content/articles"; // Updated to match actual repository structure
+const ARTICLES_PATH = "src/content/articles"; // Updated to match actual repository structure
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
