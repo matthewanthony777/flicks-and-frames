@@ -3,18 +3,19 @@ import { Metadata } from "@/types/metadata";
 // Update these constants to match your actual GitHub repository
 const GITHUB_REPO = "mattbarr1/flicks-and-frames";
 const GITHUB_BRANCH = "main";
+const ARTICLES_PATH = "src/content/articles"; // Updated path to match actual location
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
     // First try the default articles directory
     const response = await fetch(
-      `https://api.github.com/repos/${GITHUB_REPO}/contents/articles?ref=${GITHUB_BRANCH}`
+      `https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`
     );
     
     if (!response.ok) {
       console.error(`Failed to fetch articles from GitHub: ${response.statusText}`);
       
-      // Return some mock data for development
+      // Return mock data for development
       return [
         {
           title: "All Things Christopher",
