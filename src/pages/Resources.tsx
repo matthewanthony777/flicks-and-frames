@@ -1,12 +1,18 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import nosferatuScreenplay from '@/content/resources/nosferatu-screenplay.mdx';
 
 type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
 
 const Resources = () => {
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
   const resourceTypes: ResourceType[] = ['book', 'podcast', 'screenplay', 'tool', 'product'];
+
+  // Filter resources based on selected type
+  const resources = [nosferatuScreenplay].filter(
+    resource => !selectedType || resource.frontmatter.type === selectedType
+  );
 
   return (
     <div className="container mx-auto px-4 py-24">
@@ -26,7 +32,11 @@ const Resources = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Resources will be dynamically loaded from MDX files */}
+        {resources.map((Resource, index) => (
+          <div key={index}>
+            <Resource.default />
+          </div>
+        ))}
       </div>
     </div>
   );
