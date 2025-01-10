@@ -1,10 +1,12 @@
 declare module '*.mdx' {
   import { ComponentType } from 'react';
   
+  type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
+  
   interface MDXContent extends ComponentType {
     metadata: {
       title: string;
-      type: string;
+      type: ResourceType;
       description: string;
     };
   }
