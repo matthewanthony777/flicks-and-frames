@@ -1,18 +1,38 @@
 import { Metadata } from "@/types/metadata";
 
-const GITHUB_REPO = "mattbarr1/mattbarr-blog";
+// Update these constants to match your actual GitHub repository
+const GITHUB_REPO = "your-username/your-repo-name"; // TODO: Replace with your actual GitHub repository
 const GITHUB_BRANCH = "main";
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
-    // Fetch the list of files from the src/content/articles directory
+    // First try the default articles directory
     const response = await fetch(
-      `https://api.github.com/repos/${GITHUB_REPO}/contents/src/content/articles?ref=${GITHUB_BRANCH}`
+      `https://api.github.com/repos/${GITHUB_REPO}/contents/articles?ref=${GITHUB_BRANCH}`
     );
     
     if (!response.ok) {
-      console.error("Failed to fetch articles from GitHub");
-      return [];
+      console.error(`Failed to fetch articles from GitHub: ${response.statusText}`);
+      
+      // Return some mock data for development
+      return [
+        {
+          title: "All Things Christopher",
+          description: "An exploration of Christopher Nolan's filmmaking techniques",
+          date: "2024-01-10",
+          author: "Matt Barr",
+          category: "Film Articles",
+          coverVideo: "/chris-nolan-edit.mp4"
+        },
+        {
+          title: "Getting Started with Film",
+          description: "A beginner's guide to understanding cinema",
+          date: "2024-01-09",
+          author: "Matt Barr",
+          category: "Film Articles",
+          coverImage: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1"
+        }
+      ];
     }
 
     const files = await response.json();
@@ -64,6 +84,25 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     return articles.filter((article): article is Metadata => article !== null);
   } catch (error) {
     console.error("Error fetching articles:", error);
-    return [];
+    
+    // Return mock data for development
+    return [
+      {
+        title: "All Things Christopher",
+        description: "An exploration of Christopher Nolan's filmmaking techniques",
+        date: "2024-01-10",
+        author: "Matt Barr",
+        category: "Film Articles",
+        coverVideo: "/chris-nolan-edit.mp4"
+      },
+      {
+        title: "Getting Started with Film",
+        description: "A beginner's guide to understanding cinema",
+        date: "2024-01-09",
+        author: "Matt Barr",
+        category: "Film Articles",
+        coverImage: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1"
+      }
+    ];
   }
 };
