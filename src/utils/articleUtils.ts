@@ -3,11 +3,12 @@ import { Metadata } from "@/types/metadata";
 // Update these constants to match your actual GitHub repository
 const GITHUB_REPO = "matthewanthony777/flicks-and-frames";
 const GITHUB_BRANCH = "main";
-const ARTICLES_PATH = "content/articles"; // Updated to match new repository structure
+const ARTICLES_PATH = "src/content/articles"; // Updated path to match actual location
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
-    // First try the default articles directory
+    console.log(`Fetching articles from: ${ARTICLES_PATH}`);
+    
     const response = await fetch(
       `https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`
     );
@@ -21,19 +22,27 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
       return [
         {
           title: "All Things Christopher",
-          description: "An exploration of Christopher Nolan's filmmaking techniques",
-          date: "2024-01-10",
-          author: "Matt Barr",
+          description: "Examining Nolans love of time",
+          date: "2024-03-14",
+          author: "Matthew Barr",
           category: "Film Articles",
           coverVideo: "/chris-nolan-edit.mp4"
         },
         {
           title: "Getting Started with Film",
-          description: "A beginner's guide to understanding cinema",
-          date: "2024-01-09",
-          author: "Matt Barr",
+          description: "An introduction to the world of cinema",
+          date: "2024-03-14",
+          author: "Film Expert",
           category: "Film Articles",
-          coverImage: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1"
+          coverVideo: "/chris-nolan-edit.mp4"
+        },
+        {
+          title: "Folk Horror",
+          description: "Examining Eggers Cinematography",
+          date: "2024-03-14",
+          author: "Matthew Barr",
+          category: "Cinematography",
+          coverVideo: "/chris-nolan-edit.mp4"
         }
       ];
     }
@@ -92,19 +101,27 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
     return [
       {
         title: "All Things Christopher",
-        description: "An exploration of Christopher Nolan's filmmaking techniques",
-        date: "2024-01-10",
-        author: "Matt Barr",
+        description: "Examining Nolans love of time",
+        date: "2024-03-14",
+        author: "Matthew Barr",
         category: "Film Articles",
         coverVideo: "/chris-nolan-edit.mp4"
       },
       {
         title: "Getting Started with Film",
-        description: "A beginner's guide to understanding cinema",
-        date: "2024-01-09",
-        author: "Matt Barr",
+        description: "An introduction to the world of cinema",
+        date: "2024-03-14",
+        author: "Film Expert",
         category: "Film Articles",
-        coverImage: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1"
+        coverVideo: "/chris-nolan-edit.mp4"
+      },
+      {
+        title: "Folk Horror",
+        description: "Examining Eggers Cinematography",
+        date: "2024-03-14",
+        author: "Matthew Barr",
+        category: "Cinematography",
+        coverVideo: "/chris-nolan-edit.mp4"
       }
     ];
   }
