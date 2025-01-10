@@ -11,7 +11,6 @@ import Careers from "./pages/Careers";
 import Articles from "./pages/Articles";
 import ArticleView from "./pages/ArticleView";
 import Collaborate from "./pages/Collaborate";
-import Resources from "./pages/Resources";
 
 const queryClient = new QueryClient();
 
@@ -26,7 +25,6 @@ const AnimatedRoutes = () => {
         <Route path="/articles" element={<Articles />} />
         <Route path="/articles/:slug" element={<ArticleView />} />
         <Route path="/collaborate" element={<Collaborate />} />
-        <Route path="/resources" element={<Resources />} />
       </Routes>
     </AnimatePresence>
   );
