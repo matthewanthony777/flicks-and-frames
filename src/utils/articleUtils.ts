@@ -1,48 +1,14 @@
 import { Metadata } from "@/types/metadata";
 
-// Update these constants to match your actual GitHub repository
-const GITHUB_REPO = "matthewbarr/flicks-and-frames"; // This needs to be your actual GitHub username/repo
+const GITHUB_REPO = "matthewbarr/flicks-and-frames";
 const GITHUB_BRANCH = "main";
 const ARTICLES_PATH = "content/articles";
-
-// Mock data for development
-const mockArticles: Metadata[] = [
-  {
-    title: "All Things Christopher",
-    description: "Examining Nolans love of time",
-    date: "2024-03-14",
-    author: "Matthew Barr",
-    category: "Film Articles",
-    coverVideo: "/chris-nolan-edit.mp4"
-  },
-  {
-    title: "Getting Started with Film",
-    description: "An introduction to the world of cinema",
-    date: "2024-03-14",
-    author: "Film Expert",
-    category: "Film Articles",
-    coverVideo: "/chris-nolan-edit.mp4"
-  },
-  {
-    title: "Folk Horror",
-    description: "Examining Eggers Cinematography",
-    date: "2024-03-14",
-    author: "Matthew Barr",
-    category: "Cinematography",
-    coverVideo: "/chris-nolan-edit.mp4"
-  }
-];
 
 export const getArticleMetadata = async (): Promise<Metadata[]> => {
   try {
     console.log(`Fetching articles from: ${ARTICLES_PATH}`);
     console.log(`Full GitHub URL: https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`);
     
-    // For development, return mock data since the repository is private
-    console.log("Repository is private, using mock data for development");
-    return mockArticles;
-
-    /* Uncomment this section when repository is public or you have added authentication
     const response = await fetch(
       `https://api.github.com/repos/${GITHUB_REPO}/contents/${ARTICLES_PATH}?ref=${GITHUB_BRANCH}`
     );
@@ -51,7 +17,7 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
       console.error(`Failed to fetch articles from GitHub: ${response.statusText}`);
       console.error(`URL attempted: ${response.url}`);
       console.error(`Response status: ${response.status}`);
-      return mockArticles;
+      throw new Error(`GitHub API request failed: ${response.statusText}`);
     }
 
     const files = await response.json();
@@ -101,9 +67,8 @@ export const getArticleMetadata = async (): Promise<Metadata[]> => {
 
     // Filter out any null values and return valid articles
     return articles.filter((article): article is Metadata => article !== null);
-    */
   } catch (error) {
     console.error("Error fetching articles:", error);
-    return mockArticles;
+    throw error;
   }
 };
