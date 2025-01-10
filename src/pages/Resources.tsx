@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import nosferatuScreenplay from '@/content/resources/nosferatu-screenplay.mdx';
-import type { ResourceType } from '@/types/mdx';
+import type { ResourceType, MDXContent } from '@/types/mdx';
 
 const Resources = () => {
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
   const resourceTypes: ResourceType[] = ['book', 'podcast', 'screenplay', 'tool', 'product'];
 
   // Create an array of MDX modules
-  const mdxModules = [nosferatuScreenplay];
+  const mdxModules: MDXContent[] = [nosferatuScreenplay];
 
   // Filter resources based on selected type
   const filteredResources = selectedType
