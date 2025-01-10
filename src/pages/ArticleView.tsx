@@ -36,8 +36,9 @@ const ArticleView = () => {
 
         setArticle(foundArticle);
         
-        // Use the exact filename from the article metadata for fetching
-        const response = await fetch(`https://raw.githubusercontent.com/matthewanthony777/flicks-and-frames/main/content/articles/${slug}.mdx`);
+        // Create the filename from the original title to match the actual file in GitHub
+        const filename = foundArticle.title.replace(/ /g, "-");
+        const response = await fetch(`https://raw.githubusercontent.com/matthewanthony777/flicks-and-frames/main/content/articles/${filename}.mdx`);
         
         if (!response.ok) {
           console.error(`Failed to fetch article content: ${response.statusText}`);
