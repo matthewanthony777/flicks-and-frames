@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Moon, Sun, Users, Home, NewspaperIcon, Briefcase, BookOpen } from "lucide-react";
+import { Menu, X, Moon, Sun, Users, Home, NewspaperIcon, Briefcase } from "lucide-react";
 import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
 import SocialLinks from "./SocialLinks";
@@ -23,11 +23,6 @@ const Navigation = () => {
       name: "Articles", 
       href: "/articles", 
       icon: <NewspaperIcon className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:scale-110" /> 
-    },
-    { 
-      name: "Resources", 
-      href: "/resources", 
-      icon: <BookOpen className="h-4 w-4 mr-2 transition-transform duration-200 group-hover:scale-110" /> 
     },
     { 
       name: "Careers", 
