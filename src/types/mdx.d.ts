@@ -1,13 +1,14 @@
 declare module '*.mdx' {
   import { ComponentType } from 'react';
   
-  const Component: ComponentType & {
+  interface MDXContent extends ComponentType {
     metadata: {
       title: string;
       type: string;
       description: string;
     };
-  };
+  }
   
+  const Component: MDXContent;
   export default Component;
 }
