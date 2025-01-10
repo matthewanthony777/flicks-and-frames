@@ -3,14 +3,14 @@ import { Button } from "@/components/ui/button";
 import nosferatuScreenplay from '@/content/resources/nosferatu-screenplay.mdx';
 import finalDraftGuide from '@/content/resources/final-draft-guide.mdx';
 import screenplayTools from '@/content/resources/screenplay-writing-tools.mdx';
-import type { ResourceType, MDXContent } from '@/types/mdx';
+import type { ResourceType, MDXModule } from '@/types/mdx';
 
 const Resources = () => {
   const [selectedType, setSelectedType] = useState<ResourceType | null>(null);
   const resourceTypes: ResourceType[] = ['book', 'podcast', 'screenplay', 'tool', 'product'];
 
   // Create an array of MDX modules with their metadata
-  const mdxModules = [
+  const mdxModules: MDXModule[] = [
     nosferatuScreenplay,
     finalDraftGuide,
     screenplayTools

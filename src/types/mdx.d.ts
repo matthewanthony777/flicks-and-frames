@@ -3,14 +3,16 @@ declare module '*.mdx' {
   
   export type ResourceType = 'book' | 'podcast' | 'screenplay' | 'tool' | 'product';
   
-  export interface MDXContent extends ComponentType {
-    metadata: {
-      title: string;
-      type: ResourceType;
-      description: string;
-    };
+  export interface MDXMetadata {
+    title: string;
+    type: ResourceType;
+    description: string;
+  }
+
+  export interface MDXModule extends ComponentType {
+    metadata: MDXMetadata;
   }
   
-  const Component: MDXContent;
+  const Component: MDXModule;
   export default Component;
 }
